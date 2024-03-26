@@ -32,7 +32,7 @@
                 </div>
 
                 <div class="form-group mb-3">
-                    <input type="email" class="form-control" id="email" name="email" placeholder="Email" />
+                    <input type="text" class="form-control" id="email" name="email" placeholder="Email" />
                 </div>
 
                 <div class="form-group mb-3">
@@ -92,9 +92,6 @@
             if (registerUser($conn, $name, $username, $birth, $email, $password, $address, $phone)) {
                 $successMessage .= "User registered successfully.";
                 echo "<script>showAlert('$successMessage', 'success');</script>";
-            } else {
-                $errorMessage = "Error registering user.";
-                echo "<script>showAlert('$errorMessage', 'danger');</script>";
             }
         }
     }

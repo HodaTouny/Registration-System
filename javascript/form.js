@@ -22,16 +22,18 @@ document.addEventListener("DOMContentLoaded", function () {
             if (errorElement) {
                 errorElement.textContent = message;
             } else {
-                const errorMessage = document.createElement("div");
-                errorMessage.className = "alert alert-danger error-message";
+                const errorMessage = document.createElement("span");
+                errorMessage.className = "error-message";
                 errorMessage.textContent = message;
+                errorMessage.style.color = "red"; 
+                errorMessage.style.display = "block";
                 parent.appendChild(errorMessage);
             }
             isValid = false;
         }
         
         if (!name || !userName || !email || !phoneNumber || !address || !password || !confirmPassword || !birthDate||!imageInput) {
-            displayError(document.getElementById("registrationForm"), "All fields are required.");
+            showAlert("All fields are required.",'danger');
         }
 
         if (name.split(" ").length < 2 || !/^[a-zA-Z\s]+$/.test(name)) {
