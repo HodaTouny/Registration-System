@@ -47,7 +47,7 @@
                     <input type="password" class="form-control" id="password" name="password" placeholder="Password" />
                 </div>
                 <div class="form-group mb-3">
-                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confrirm Password" />
+                    <input type="password" class="form-control" id="confirm_password" name="confirm_password" placeholder="Confirm Password" />
                 </div>
 
                 <div class="form-group mb-3">
@@ -66,18 +66,15 @@
     </div>
 
     <script src="../javascript/form.js"></script>
-</body>
-</html>
 
-
-<?php
+    <?php
     include 'DB_Ops.php';
 
     $errorMessage = $successMessage = '';
 
+    
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $username = $_POST['user-name'];
-
         if (checkUsername($conn, $username)) {
             $errorMessage = "Username already exists.";
             echo "<script>showAlert('$errorMessage', 'danger');</script>";
@@ -88,11 +85,36 @@
             $birth = $_POST['Birth'];
             $address = $_POST['address'];
             $phone = $_POST['phone-number'];
-
-            if (registerUser($conn, $name, $username, $birth, $email, $password, $address, $phone)) {
-                $successMessage .= "User registered successfully.";
-                echo "<script>showAlert('$successMessage', 'success');</script>";
+    
+            if (!empty($_FILES["image"]["name"])) {
+                $targetDirectory = "uploads/";
+    
+                if (!file_exists($targetDirectory)) {
+                    mkdir($targetDirectory, 0777, true);
+                }
+    
+                $targetFile = $targetDirectory . uniqid() . '_' . basename($_FILES["image"]["name"]);
+    
+                if (move_uploaded_file($_FILES["image"]["tmp_name"], $targetFile)) {
+                    if (registerUser($conn, $name, $username, $birth, $email, $password, $address, $phone, basename($targetFile))) {
+                        $successMessage = "User registered successfully.";
+                        echo "<script>showAlert('$successMessage', 'success');</script>";
+                    } else {
+                        $errorMessage = "Error registering user.";
+                    }
+                } else {
+                    $errorMessage = "Sorry, there was an error uploading your file.";
+                }
+            } else {
+                $errorMessage = "Please select an image.";
+            }
+    
+            if ($errorMessage) {
+                echo "<script>showAlert('$errorMessage', 'danger');</script>";
             }
         }
     }
     ?>
+    
+</body>
+</html>

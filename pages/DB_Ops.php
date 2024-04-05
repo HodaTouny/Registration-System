@@ -18,9 +18,9 @@ function checkUsername($conn, $username)
     return mysqli_num_rows($result) > 0;
 }
 
-function registerUser($conn, $name, $username, $birth, $email, $password, $address, $phone)
+function registerUser($conn, $name, $username, $birth, $email, $password, $address, $phone,$image)
 {
-    $query = "INSERT INTO users (full_name, user_name, birthdate, email, password, address, phone) VALUES ('$name', '$username', '$birth', '$email', '$password', '$address', '$phone')";
+    $query = "INSERT INTO users (full_name, user_name, birthdate, email, password, address, phone,user_image) VALUES ('$name', '$username', '$birth', '$email', '$password', '$address', '$phone','$image')";
     return mysqli_query($conn, $query);
 }
 //  if($conn){

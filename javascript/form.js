@@ -76,7 +76,18 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function handleImageUpload(event) {
     const file = event.target.files[0];
+    const validFormats = ['image/jpeg', 'image/png', 'image/gif'];
+    const maxSize = 5 * 1024 * 1024;
     if (file) {
+        if (!validFormats.includes(file.type)) {
+            showAlert("Invalid image format. Please select a JPEG, PNG, or GIF file.", 'danger');
+            return; 
+        }
+
+        if (file.size > maxSize) {
+            showAlert("File size exceeds the maximum limit of 5MB.", 'danger');
+            return; }
+
         const reader = new FileReader();
         reader.onload = function(e) {
             document.getElementById('uploadedImage').src = e.target.result;
