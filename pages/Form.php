@@ -63,9 +63,25 @@
         </form>
         <div id="alertContainer" class ="col-md-12"></div>
         
+        <div class="modal" id="actorsModal" tabindex="-1" aria-labelledby="actorsModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h6 class="modal-title" id="actorsModalLabel">Actors with the same birthdate</h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <ul class="list-group" id="actorsList">
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </div>
 
     <script src="../javascript/form.js"></script>
+    <script src="../Bootstrap/bootstrap.min.js"></script>
 
 <?php
 
