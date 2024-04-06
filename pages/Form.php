@@ -55,9 +55,9 @@
                 </div>
                 
                 <div class="form-group mb-3 row align-items-center justify-content-center">
-                    <button type="button" class="btn text-white col-md-5 mb-2 mb-md-0" style="background-color: #753873;" data-bs-toggle="modal" data-bs-target="#actorsModal">Actors With Same DBO</button>
+                    <button type="button" class="btn text-white col-md-5 mb-2 mb-md-0" style="background-color: #753873;" data-bs-toggle="modal" data-bs-target="#actorsModal" id="dob-btn">Actors With Same DBO</button>
                     <div class="col-md-1"></div>
-                    <button type="submit" class="btn text-white col-md-5" style="background-color: #753873;">Sign Up</button>
+                    <button type="submit" class="btn text-white col-md-5" style="background-color: #753873;" id="submit-btn">Sign Up</button>
                 </div>
             </div>
         </form>

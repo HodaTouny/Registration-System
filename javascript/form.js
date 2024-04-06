@@ -46,6 +46,10 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.send(formData);
     });
     
+    document.getElementById("dob-btn").addEventListener("click", function () {
+        getActorsByDOB();
+    })
+
 });
 function validation(inputField) {
     const fieldid = inputField.id;
@@ -140,4 +144,23 @@ function handleImageUpload(event) {
         }
         reader.readAsDataURL(file);
     }
+}
+
+function getActorsByDOB() {
+    const dateOfBirth = document.getElementById("Birth").value.substr(5);
+    document.getElementById("actorsList").innerHTML = "";
+    
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function () {
+
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            
+            var response = JSON.parse(xhr.responseText);
+            for (var i = 0; i < response.length; i++){
+                document.getElementById("actorsList").innerHTML += `<li class='list-group-item'>${response[i]}</li>`;
+            }
+        }
+    }
+    xhr.open("GET", "API_Ops.php?today=" + dateOfBirth);
+    xhr.send();
 }

@@ -1,5 +1,8 @@
 <?php
 
+$date = $_REQUEST["today"];
+
+
 $curls = array();
 $responses = array();
 $actors_names = array();
