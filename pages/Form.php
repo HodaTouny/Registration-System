@@ -79,7 +79,7 @@
         </div>
 
     </div>
-
+    <div class="loading" ></div>
     <script src="../javascript/form.js"></script>
     <script src="../Bootstrap/bootstrap.min.js"></script>
 

@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("registrationForm");
 
+    // const loader = document.querySelector(".loading");
+    // loader.classList.add("loading-hidden");
+
     const fieldsID = ["name", "user-name", "email", "phone-number", "address", "password", "confirm_password", "Birth"];
     fieldsID.forEach(fieldID => {
         const field = document.getElementById(fieldID);
@@ -147,7 +150,7 @@ function handleImageUpload(event) {
 }
 
 function getActorsByDOB() {
-    const dateOfBirth = document.getElementById("Birth").value.substr(5);
+    const dateOfBirth = document.getElementById("Birth").value.substring(5);
     document.getElementById("actorsList").innerHTML = "";
     
     var xhr = new XMLHttpRequest();
@@ -159,6 +162,7 @@ function getActorsByDOB() {
             for (var i = 0; i < response.length; i++){
                 document.getElementById("actorsList").innerHTML += `<li class='list-group-item'>${response[i]}</li>`;
             }
+            // document.body.removeChild("loading");
         }
     }
     xhr.open("GET", "API_Ops.php?today=" + dateOfBirth);

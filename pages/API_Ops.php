@@ -1,6 +1,8 @@
 <?php
 
+
 $date = $_REQUEST["today"];
+//$date = "03-15";
 
 
 $curls = array();
@@ -9,7 +11,7 @@ $actors_names = array();
 
 $curl_multi_handle = curl_multi_init();
 
-$ids_url = "https://imdb8.p.rapidapi.com/actors/v2/get-born-today?today=05-15";
+$ids_url = "https://imdb8.p.rapidapi.com/actors/v2/get-born-today?today=$date";
 
 $curl = curl_init();
 
@@ -20,13 +22,14 @@ curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($curl);
 $decoded_response = json_decode($response, true);
 
+
 curl_close($curl);
 
-// print_r($decoded_response);
 
 foreach ($decoded_response["data"]["bornToday"]["edges"] as $edge) {
     $id = $edge["node"]["id"];
     $url = "https://imdb8.p.rapidapi.com/actors/v2/get-bio?nconst=$id";
+
 
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
@@ -50,12 +53,16 @@ foreach ($curls as $id => $curl) {
     curl_close($curl);
 
     $decoded_response = json_decode($response, true);
-    $actors_names[] = $decoded_response["data"]["name"]["nameText"]["text"];
+
+//    foreach ($decoded_response['data'] as $entry)
+//         print_r($decoded_response['data']['name']['nameText']['text']) ;
+    if (isset($decoded_response["data"]["name"]["nameText"]["text"]))
+        $actors_names[] = $decoded_response["data"]["name"]["nameText"]["text"];
 }
 
 curl_multi_close($curl_multi_handle);
 
-print_r($decoded_response);
+echo json_encode($actors_names) ;
 
 
 
