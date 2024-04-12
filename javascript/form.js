@@ -157,7 +157,7 @@ function getActorsByDOB() {
     xhr.onreadystatechange = function () {
 
         if (xhr.readyState === 4 && xhr.status === 200) {
-            
+
             var response = JSON.parse(xhr.responseText);
             for (var i = 0; i < response.length; i++){
                 document.getElementById("actorsList").innerHTML += `<li class='list-group-item'>${response[i]}</li>`;

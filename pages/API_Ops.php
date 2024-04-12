@@ -1,22 +1,19 @@
 <?php
 
+define("API_HOST", "imdb8.p.rapidapi.com");
+define("API_KEY", "a8818b1e0amsh4812456ddbb8ad9p183bd1jsnf0f931d70abb");
+define("BASE_URL", "https://" . API_HOST);
+
 
 $date = $_REQUEST["today"];
-//$date = "03-15";
 
-
-$curls = array();
-$responses = array();
-$actors_names = array();
-
-$curl_multi_handle = curl_multi_init();
-
-$ids_url = "https://imdb8.p.rapidapi.com/actors/v2/get-born-today?today=$date";
+$endpoint = "/actors/v2/get-born-today?today=$date";
+$url = BASE_URL . $endpoint;
 
 $curl = curl_init();
 
-curl_setopt($curl, CURLOPT_URL, $ids_url);
-curl_setopt($curl, CURLOPT_HTTPHEADER, ["X-RapidAPI-Host: imdb8.p.rapidapi.com", "X-RapidAPI-Key: 8e7f459ccfmsha4b3e9d7a4b4df1p1b6b4ejsncd1a5429c758"]);
+curl_setopt($curl, CURLOPT_URL, $url);
+curl_setopt($curl, CURLOPT_HTTPHEADER, ["X-RapidAPI-Host: " . API_HOST, "X-RapidAPI-Key: " . API_KEY]);
 curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
 $response = curl_exec($curl);
@@ -25,15 +22,21 @@ $decoded_response = json_decode($response, true);
 
 curl_close($curl);
 
+$curls = array();
+$responses = array();
+$actors_names = array();
+
+$curl_multi_handle = curl_multi_init();
 
 foreach ($decoded_response["data"]["bornToday"]["edges"] as $edge) {
     $id = $edge["node"]["id"];
-    $url = "https://imdb8.p.rapidapi.com/actors/v2/get-bio?nconst=$id";
+    $endpoint = "/actors/v2/get-bio?nconst=$id";
+    $url = BASE_URL . $endpoint;
 
 
     $curl = curl_init();
     curl_setopt($curl, CURLOPT_URL, $url);
-    curl_setopt($curl, CURLOPT_HTTPHEADER, ["X-RapidAPI-Host: imdb8.p.rapidapi.com", "X-RapidAPI-Key: 8e7f459ccfmsha4b3e9d7a4b4df1p1b6b4ejsncd1a5429c758"]);
+    curl_setopt($curl, CURLOPT_HTTPHEADER, ["X-RapidAPI-Host: " . API_HOST, "X-RapidAPI-Key: " . API_KEY]);
     curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
 
     curl_multi_add_handle($curl_multi_handle, $curl);
@@ -54,8 +57,6 @@ foreach ($curls as $id => $curl) {
 
     $decoded_response = json_decode($response, true);
 
-//    foreach ($decoded_response['data'] as $entry)
-//         print_r($decoded_response['data']['name']['nameText']['text']) ;
     if (isset($decoded_response["data"]["name"]["nameText"]["text"]))
         $actors_names[] = $decoded_response["data"]["name"]["nameText"]["text"];
 }
@@ -64,54 +65,5 @@ curl_multi_close($curl_multi_handle);
 
 echo json_encode($actors_names) ;
 
-
-
-/*
-$curls = [];
-$responses = [];
-$actors_names = [];
-
-
-
-$curl = curl_init();
-
-curl_setopt($curl, CURLOPT_URL, "https://imdb8.p.rapidapi.com/actors/v2/get-born-today?today=05-15");
-curl_setopt($curl, CURLOPT_HTTPHEADER, ["X-RapidAPI-Host: imdb8.p.rapidapi.com", "X-RapidAPI-Key: 8e7f459ccfmsha4b3e9d7a4b4df1p1b6b4ejsncd1a5429c758"]);
-curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-$response = curl_exec($curl);
-
-curl_close($curl);
-
-
-$decoded_response = json_decode($response, true);
-// echo $decoded_response; 
-
-$actors_ids = [];
-
-// echo $response->data;   
-foreach($decoded_response["data"]["bornToday"]["edges"] as $edge){
-    $actors_ids[] = $edge["node"]["id"];    
-}
-
-// print_r($actors_ids);
-$actors_names = [];
-
-foreach($actors_ids as $id){
-    $curl = curl_init();
-
-   curl_setopt($curl, CURLOPT_URL, "https://imdb8.p.rapidapi.com/actors/v2/get-bio?nconst=$id");
-   curl_setopt($curl, CURLOPT_HTTPHEADER, ["X-RapidAPI-Host: imdb8.p.rapidapi.com", "X-RapidAPI-Key: 8e7f459ccfmsha4b3e9d7a4b4df1p1b6b4ejsncd1a5429c758"]);
-   curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);
-
-  $response = curl_exec($curl);
-  $decoded_response = json_decode($response,true);
-  $actors_names[] =  $decoded_response["data"]["name"]["nameText"]["text"]; 
-
-  curl_close($curl);
-}
-
-print_r($actors_names);
-*/
 ?>
 
