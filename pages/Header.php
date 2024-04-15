@@ -12,8 +12,7 @@
         <div class="container">
             <div class="d-flex flex-wrap align-items-center justify-content-between">
                 <a href="/" class="d-flex text-white align-items-center my-2 my-lg-0 text-decoration-none">
-                    <h3>Registration</h3>
-                </a>
+                <img src="../assets/logo.png" width="180"></a>
                 <div class="d-flex flex-wrap align-items-center">
                     <button type="button" class="btn btn-light text-dark me-2 signup">Sign up</button>
                     <button type="button" class="btn btn-light text-dark login disabled">Sign in</button>

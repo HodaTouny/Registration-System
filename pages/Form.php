@@ -8,7 +8,7 @@
 </head>
 
 <body>
-    <div class="container">
+    <div class="container py-4">
         <form method="POST" enctype="multipart/form-data" id="registrationForm">
             <div class="row justify-content-center">
                 <div class="col-md-3 mb-3 col-sm-3">
