@@ -39,8 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         showAlert(message, type);
                         if (message.trim().toLowerCase() === "user registered successfully.") {
                             form.reset();
-                            document.getElementById("uploadedImage").src = "../assets/upload.png"; 
-
+                                document.getElementById("uploadedImage").src = "../assets/upload.png"; 
                         }
                     } else {
                         showAlert("server error", 'danger');
@@ -133,6 +132,7 @@ function handleImageUpload(event) {
     const file = event.target.files[0];
     const validFormats = ['image/jpeg', 'image/png', 'image/gif'];
     const maxSize = 5 * 1024 * 1024;
+    
     if (file) {
         if (!validFormats.includes(file.type)) {
             showAlert("Invalid image format. Please select a JPEG, PNG, or GIF file.", 'danger');
@@ -141,15 +141,49 @@ function handleImageUpload(event) {
 
         if (file.size > maxSize) {
             showAlert("File size exceeds the maximum limit of 5MB.", 'danger');
-            return; }
+            return;
+        }
 
         const reader = new FileReader();
         reader.onload = function(e) {
-            document.getElementById('uploadedImage').src = e.target.result;
-        }
+            const img = new Image();
+            img.onload = function() {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                const diameter = 100; =
+                canvas.width = diameter;
+                canvas.height = diameter;
+                
+                ctx.clearRect(0, 0, diameter, diameter);
+                
+                ctx.beginPath();
+                ctx.arc(diameter / 2, diameter / 2, diameter / 2, 0, Math.PI * 2);
+                ctx.closePath();
+                ctx.clip();
+                const aspectRatio = img.width / img.height;
+                let newWidth, newHeight, x, y;
+                if (aspectRatio > 1) {
+                    newWidth = diameter;
+                    newHeight = diameter / aspectRatio;
+                    x = 0;
+                    y = (diameter - newHeight) / 2;
+                } else {
+                    newWidth = diameter * aspectRatio;
+                    newHeight = diameter;
+                    x = (diameter - newWidth) / 2;
+                    y = 0;
+                }
+                
+                ctx.drawImage(img, x, y, newWidth, newHeight);
+                
+                document.getElementById('uploadedImage').src = canvas.toDataURL('image/png');
+            };
+            img.src = e.target.result;
+        };
         reader.readAsDataURL(file);
     }
 }
+
 
 function getActorsByDOB() {
     const dateOfBirth = document.getElementById("Birth").value.substring(5);
