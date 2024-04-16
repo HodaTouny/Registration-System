@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         showAlert(message, type);
                         if (message.trim().toLowerCase() === "user registered successfully.") {
                             form.reset();
-                                document.getElementById("uploadedImage").src = "../assets/upload.png"; 
+                            document.getElementById("uploadedImage").src = "../assets/upload.png";
                         }
                     } else {
                         showAlert("server error", 'danger');
@@ -150,7 +150,7 @@ function handleImageUpload(event) {
             img.onload = function() {
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
-                const diameter = 100; =
+                const diameter = 100; 
                 canvas.width = diameter;
                 canvas.height = diameter;
                 
@@ -160,6 +160,7 @@ function handleImageUpload(event) {
                 ctx.arc(diameter / 2, diameter / 2, diameter / 2, 0, Math.PI * 2);
                 ctx.closePath();
                 ctx.clip();
+                
                 const aspectRatio = img.width / img.height;
                 let newWidth, newHeight, x, y;
                 if (aspectRatio > 1) {
