@@ -39,6 +39,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         showAlert(message, type);
                         if (message.trim().toLowerCase() === "user registered successfully.") {
                             form.reset();
+                            document.getElementById("uploadedImage").src = "../assets/upload.png"; 
+
                         }
                     } else {
                         showAlert("server error", 'danger');
