@@ -55,7 +55,11 @@
                 </div>
                 
                 <div class="form-group mb-3 row align-items-center justify-content-center">
-                    <button type="button" class="btn text-white col-md-5 mb-2 mb-md-0" style="background-color: #753873;" data-bs-toggle="modal" data-bs-target="#actorsModal" id="dob-btn">Actors With Same DBO</button>
+                    <button  type="button" class="btn text-white col-md-5 mb-2 mb-md-0" style="background-color: #753873;" data-bs-toggle="modal" data-bs-target="#actorsModal" id="dob-btn">
+                        <span id = "dobButton">Actors With Same DOB</span>
+                    <span id="spinner" class="spinner-border spinner-border-sm" aria-hidden="true" style="display: none"></span>
+                    <span id="loading" role="status" style="display: none">Loading...</span>
+                    </button>
                     <div class="col-md-1"></div>
                     <button type="submit" class="btn text-white col-md-5" style="background-color: #753873;" id="submit-btn">Sign Up</button>
                 </div>

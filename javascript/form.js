@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", function () {
         xhr.open("POST", "Controller.php", true);
         xhr.send(formData);
     });
-    
+
     document.getElementById("dob-btn").addEventListener("click", function () {
         getActorsByDOB();
     })
@@ -186,7 +186,20 @@ function handleImageUpload(event) {
 }
 
 
+const actorsModal = new bootstrap.Modal(document.getElementById("actorsModal"));
+
 function getActorsByDOB() {
+    actorsModal.hide();
+
+    var dobButton = document.getElementById("dobButton");
+    var spinner = document.getElementById("spinner");
+    var loading = document.getElementById("loading");
+
+    dobButton.style.display = "none";
+    spinner.style.display = "inline-block";
+    loading.style.display = "inline-block";
+
+
     const dateOfBirth = document.getElementById("Birth").value.substring(5);
     document.getElementById("actorsList").innerHTML = "";
     
@@ -199,9 +212,16 @@ function getActorsByDOB() {
             for (var i = 0; i < response.length; i++){
                 document.getElementById("actorsList").innerHTML += `<li class='list-group-item'>${response[i]}</li>`;
             }
-            // document.body.removeChild("loading");
+
+            actorsModal.show();
+
+            dobButton.style.display = "inline-block";
+            spinner.style.display = "none";
+            loading.style.display = "none";
         }
     }
     xhr.open("GET", "API_Ops.php?today=" + dateOfBirth);
     xhr.send();
+
+
 }
