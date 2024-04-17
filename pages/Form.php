@@ -82,12 +82,7 @@
     <div class="loading" ></div>
     <script src="../Bootstrap/bootstrap.min.js"></script>
     <script src="../javascript/form.js"></script>
+    <?php include 'Controller.php'; ?>
 
-<?php
-
-include 'Upload.php';
-
-?>
-    
 </body>
 </html>

@@ -46,7 +46,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 } 
         };
-        xhr.open("POST", "upload.php", true);
+        xhr.open("POST", "Controller.php", true);
         xhr.send(formData);
     });
     
